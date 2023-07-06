@@ -5,8 +5,6 @@ import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 
 const Dialogs = (props) => {
-    console.log(props)
-    window.props = props;
     let dialogsElements = props.state.dialogs.map(d => {
         return <DialogItem id={d.id} name={d.name} avatar={d.avatar} />
     });
@@ -19,11 +17,11 @@ const Dialogs = (props) => {
 
     let changeForm = () => {
         let text = newDialogElement.current.value;
-        props.updateMessageText(text);
+        props.dispatch({type: 'UPDATE-MESSAGE-TEXT', newText: text})
     };
 
     let addMessage = () => {
-        props.addNewMessage();
+        props.dispatch({type: 'ADD-NEW-MESSAGE'});
     };
 
     return (

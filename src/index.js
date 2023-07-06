@@ -10,15 +10,11 @@ import ReactDOM from 'react-dom/client';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 export let rerenderEntireTree = (state)=>{
-    console.log(state)
     root.render(
         <React.StrictMode>
             <BrowserRouter>
                 <App state={state}
-                     addPost={store.addPost.bind(store)}
-                     updateNewPostText={store.updateNewPostText.bind(store)}
-                     addNewMessage={store.addNewMessage.bind(store)}
-                     updateMessageText={store.updateMessageText.bind(store)}
+                     dispatch={store.dispatch.bind(store)}
                 />
             </BrowserRouter>
         </React.StrictMode>
