@@ -6,6 +6,7 @@ import DialogItem from "./DialogItem/DialogItem";
 
 const Dialogs = (props) => {
     console.log(props)
+    window.props = props;
     let dialogsElements = props.state.dialogs.map(d => {
         return <DialogItem id={d.id} name={d.name} avatar={d.avatar} />
     });

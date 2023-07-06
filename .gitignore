@@ -1,7 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/copy
+/copy-src
+/copy-old-src
 /node_modules
 /.pnp
 .pnp.js
