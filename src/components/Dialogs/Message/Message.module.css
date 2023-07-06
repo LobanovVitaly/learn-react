@@ -1,0 +1,48 @@
+.messageRow{
+    display: flex;
+}
+.messageRow.answer{
+    flex-direction: row-reverse;
+}
+.message{
+    position: relative;
+    margin: 0 15px 15px 15px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    background: #dcf5f0;
+}
+.message::before{
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 15px;
+    width: 6px;
+    height: 6px;
+    border: 1px solid #000;
+    border-right: none;
+    border-bottom: none;
+    background: #dcf5f0;
+    transform: rotate(-45deg);
+}
+.messageRow.answer .message{
+    background: #a2e3d6;
+}
+.messageRow.answer .message::before{
+    right: -5px;
+    left: unset;
+    background: #a2e3d6;
+    transform: rotate(135deg);
+}
+
+.avatar{
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: coral;
+}
+
+.messageRow.answer .avatar{
+    background: #50a5ff;
+}
