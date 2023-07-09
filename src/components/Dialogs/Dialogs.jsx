@@ -3,7 +3,7 @@ import s from './Dialogs.module.css'
 import {NavLink} from "react-router-dom";
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {addNewMessageActionCreator, onChangeMessageActionCreator} from "../../redux/state";
+import {addNewMessageActionCreator, onChangeMessageActionCreator} from "../../redux/dialogs-reducer";
 
 const Dialogs = (props) => {
     let dialogsElements = props.state.dialogs.map(d => {
