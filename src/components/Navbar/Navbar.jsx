@@ -15,7 +15,7 @@ const Navbar = (props)=>{
 		  </ul>
 
 			<div className="friends">
-				<Friends friends={props.state.friends} />
+				<Friends friends={props.store.getState().sidebar.friends} />
 			</div>
 		</nav>
 	);

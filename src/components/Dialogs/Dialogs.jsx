@@ -1,28 +1,29 @@
 import React  from 'react';
 import s from './Dialogs.module.css'
-import {NavLink} from "react-router-dom";
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {addNewMessageActionCreator, onChangeMessageActionCreator} from "../../redux/dialogs-reducer";
+
 
 const Dialogs = (props) => {
-    let dialogsElements = props.state.dialogs.map(d => {
+    let state = props.dialogsPage;
+
+    let dialogsElements = state.dialogs.map(d => {
         return <DialogItem id={d.id} name={d.name} avatar={d.avatar} />
     });
 
-    let messagesElements = props.state.messages.map(m => {
+    let messagesElements = state.messages.map(m => {
         return <Message message={m.message}  answer={m.answer} />
     });
 
     let newDialogElement = React.createRef();
 
-    let changeForm = () => {
+    let onChangeForm = () => {
         let text = newDialogElement.current.value;
-        props.dispatch(onChangeMessageActionCreator(text))
+        props.changeForm(text);
     };
 
-    let addMessage = () => {
-        props.dispatch(addNewMessageActionCreator());
+    let onSendMessage = () => {
+        props.sendMessage();
     };
 
     return (
@@ -36,11 +37,11 @@ const Dialogs = (props) => {
                 <div className={s.newMessage}>
                     <textarea
                         ref={newDialogElement}
-                        value={props.state.newMessageText}
-                        onChange={changeForm}
+                        value={state.newMessageText}
+                        onChange={onChangeForm}
                     >
                     </textarea>
-                    <button onClick={addMessage}>AddMessage</button>
+                    <button onClick={onSendMessage}>AddMessage</button>
                 </div>
             </div>
         </div>
