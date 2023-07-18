@@ -13,11 +13,11 @@ function App(props) {
     return (
             <div className="app-wrapper">
                 <Header/>
-                <Navbar store={props.store}/>
+                <Navbar />
                 <div className="app-wrapper-content">
                     <Routes>
-                        <Route path='/dialogs/*' element={<DialogsContainer store={props.store} dispatch={props.dispatch} />}/>
-                        <Route path='/profile' element={<Profile store={props.store} dispatch={props.dispatch} />} />
+                        <Route path='/dialogs/*' element={<DialogsContainer />}/>
+                        <Route path='/profile' element={<Profile />} />
                         <Route path='/news'  element={<News />}/>
                         <Route path='/music' element={<Music />} />
                         <Route path='/settings' element={<Settings />}/>
