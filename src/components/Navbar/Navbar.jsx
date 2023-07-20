@@ -1,7 +1,6 @@
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
 import Friends from "./Friends/Friends";
-import StoreContext from "../../StoreСontext";
 
 
 const Navbar = (props)=>{
@@ -16,15 +15,7 @@ const Navbar = (props)=>{
 		  </ul>
 
 			<div className="friends">
-				<StoreContext.Consumer>
-					{
-						(store) => {
-							return (
-								<Friends friends={store.getState().sidebar.friends} />
-							)
-						}
-					}
-				</StoreContext.Consumer>
+				<Friends friends={props.friends} />
 			</div>
 		</nav>
 	);
