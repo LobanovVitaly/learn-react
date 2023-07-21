@@ -18,28 +18,29 @@ let initialState = {
 };
 
 const dialogsReducer = (state = initialState, action) => {
-
+    // копию сразу тут делать плохо, т.к. редьюсер всегда попадает сюда, даже если action не отсюда
+    // а делать лишнюю копию плохо
     switch (action.type) {
-        case ADD_NEW_MESSAGE: {
-            let copyState = {...state};
-
+        case ADD_NEW_MESSAGE:
             if (state.newMessageText) {
                 let newMessage = {
                     id: 4,
                     message: state.newMessageText,
                     answer: true
+                };
+                return {
+                    ...state,
+                    newMessageText: '',
+                    messages: [...state.messages, newMessage] //вместо push
                 }
-                copyState.messages = [...state.messages];
-                copyState.messages.push(newMessage);
-                copyState.newMessageText = '';
             }
-            return copyState;
-        }
-        case UPDATE_MESSAGE_TEXT:{
-            let copyState = {...state};
-            copyState.newMessageText = action.newText;
-            return copyState;
-        }
+            break;
+        case UPDATE_MESSAGE_TEXT:
+            return {
+                ...state,
+                newMessageText: action.newText // записываем сразу  объекте
+            }
+            //stateCopy.newMessageText = action.newText;
         default:
             return state;
     }
