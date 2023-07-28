@@ -34,7 +34,7 @@ const dialogsReducer = (state = initialState, action) => {
                     messages: [...state.messages, newMessage] //вместо push
                 }
             }
-            break;
+            return state;
         case UPDATE_MESSAGE_TEXT:
             return {
                 ...state,
