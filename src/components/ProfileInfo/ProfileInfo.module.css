@@ -5,3 +5,12 @@
 .descriptionBlock{
     padding: 20px;
 }
+
+.socialLinks{
+    display: flex;
+    padding: 20px;
+}
+.socialLinks a{
+    margin-right: 15px;
+    color: #000;
+}

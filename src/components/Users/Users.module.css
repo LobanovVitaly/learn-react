@@ -32,3 +32,7 @@
 .userPhoto img{
     width: 100px;
 }
+
+.socialLinks{
+    display: flex;
+}

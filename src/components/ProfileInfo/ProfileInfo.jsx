@@ -1,7 +1,11 @@
 import React  from 'react';
 import s from "./ProfileInfo.module.css";
+import Preloader from "../common/Preloader/Preloader";
 
 const ProfileInfo = (props) => {
+    if(!props.profile){
+        return <Preloader />
+    }
     return (
         <div>
             <div className={s.contentTopImg}>
@@ -11,7 +15,26 @@ const ProfileInfo = (props) => {
             </div>
 
             <div className={s.descriptionBlock}>
-                ava + descr
+                <img src={props.profile.photos.small} alt=""/>
+                <p>{props.profile.aboutMe}</p>
+            </div>
+
+            <div className={s.socialLinks}>
+                {(props.profile.contacts.facebook) &&
+                    <a href={props.profile.contacts.facebook}>Facebook</a>
+                }
+                {(props.profile.contacts.website) &&
+                    <a href={props.profile.contacts.website}>website</a>
+                }
+                {(props.profile.contacts.vk) &&
+                    <a href={props.profile.contacts.vk}>vk</a>
+                }
+                {(props.profile.contacts.twitter) &&
+                    <a href={props.profile.contacts.twitter}>twitter</a>
+                }
+                {(props.profile.contacts.instagram) &&
+                    <a href={props.profile.contacts.instagram}>instagram</a>
+                }
             </div>
         </div>
     );

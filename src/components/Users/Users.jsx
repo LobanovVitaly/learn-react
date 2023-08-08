@@ -1,6 +1,7 @@
 import React from "react";
 import s from "./Users.module.css";
 import userPhoto from "../../assets/img/user-avatar.png";
+import {NavLink} from "react-router-dom";
 
 
 let Users = (props) => {
@@ -15,7 +16,7 @@ let Users = (props) => {
     let curPageStart = ((curPage - 5) < 0) ?  0  : curPage - 5 ;
     let curPageEnd = curPage + 5;
     let slicedPages = pages.slice( curPageStart, curPageEnd);
-    console.log(props)
+
 
     return (
         <div className={s.users}>
@@ -40,7 +41,9 @@ let Users = (props) => {
                                 <span>
                                     <div>
                                         <div className={s.userPhoto}>
-                                            <img src={u.photos.small != null ? u.photos.small : userPhoto} alt={u.fullName} />
+                                            <NavLink to={'/profile/' + u.id}>
+                                                <img src={u.photos.small != null ? u.photos.small : userPhoto} alt={u.fullName} />
+                                            </NavLink>
                                         </div>
                                         <p>{u.name}</p>
                                     </div>
