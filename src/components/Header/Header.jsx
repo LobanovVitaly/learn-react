@@ -1,15 +1,19 @@
 import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
+import userPhoto from "../../assets/img/user-avatar.png";
 import React from "react";
 
 const Header = (props) => {
     return (
         <header className={s.header}>
-          <img src="https://avatars.mds.yandex.net/i?id=efd6ab8b3a67b0abc777cefaf348c9e086e53173-9265516-images-thumbs&n=13" alt="" />
+          <img className={s.logo} src="https://avatars.mds.yandex.net/i?id=efd6ab8b3a67b0abc777cefaf348c9e086e53173-9265516-images-thumbs&n=13" alt="" />
           <div className={s.authBlock}>
               {
                   props.isAuth ?
-                     props.login :
+                     <>
+                         <img className={s.authPhoto} src={props.profile.photo != null ? props.profile.photo : userPhoto} alt={props.login} />
+                         {props.login}
+                     </> :
                      <NavLink to='/login/'>Login</NavLink>
               }
           </div>
