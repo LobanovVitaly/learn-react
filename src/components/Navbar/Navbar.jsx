@@ -4,6 +4,7 @@ import Friends from "./Friends/Friends";
 
 
 const Navbar = (props) => {
+    console.log(props)
     return (
         <nav className={s.nav}>
             <ul>

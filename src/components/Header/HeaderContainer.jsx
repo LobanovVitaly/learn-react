@@ -18,7 +18,7 @@ class HeaderContainer extends React.Component {
                 axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`, {
                     withCredentials: true
                 }).then(response => {
-                    console.log(response.data)
+                   // console.log(response.data)
                     this.props.setAuthUserPhoto(response.data.photos.small);
                 })
             }

@@ -1,14 +1,16 @@
 import s from './Friends.module.css';
+import {NavLink} from "react-router-dom";
+import defaultAvatar from './../../../assets/img/user-avatar.png';
 
 const Friends = (props) => {
-    let friendsElements = props.friends.map(f => {
+    let friendsElements = props.friends.slice(0, 3).map(f => {
         return (
-            <div key={f.name} className={s.friend}>
+            <NavLink to={'/profile/' + f.id} key={f.name} className={s.friend}>
                 <div className={s.avatar}>
-                    <img src={f.avatar} alt=""/>
+                    <img src={f.photos.small != null ? f.photos.small : defaultAvatar } alt={f.name}/>
                 </div>
                 <p>{f.name}</p>
-            </div>
+            </NavLink>
         );
     })
     return (

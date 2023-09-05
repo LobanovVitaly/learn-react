@@ -11,18 +11,18 @@ let mapStateToProps = (state) => {
         newPostText: state.profilePage.newPostText
     }
 };
-let mapDispatchToProps = (dispatch) => {
-    return {
-        updateNewPostText: (text) => {
-            dispatch(onPostChangeActionCreator(text));
-        },
-        addPost: () => {
-            dispatch(addPostActionCreator());
-        }
-    }
-};
+// let mapDispatchToProps = (dispatch) => {
+//     return {
+//         updateNewPostText: (text) => {
+//             dispatch(onPostChangeActionCreator(text));
+//         },
+//         addPost: () => {
+//             dispatch(addPostActionCreator());
+//         }
+//     }
+// };
 
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+const MyPostsContainer = connect(mapStateToProps, {onPostChangeActionCreator, addPostActionCreator})(MyPosts)
 
 export default MyPostsContainer;
 
