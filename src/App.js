@@ -9,6 +9,7 @@ import Settings from "./components/Settings/Settings";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import LoginPage from "./components/Login/Login";
 
 function App(props) {
     return (
@@ -17,6 +18,7 @@ function App(props) {
             <NavbarContainer />
             <div className="app-wrapper-content">
                 <Routes>
+                    <Route path='/login' element={<LoginPage />} />
                     <Route path='/dialogs/*' element={<DialogsContainer />}/>
                     <Route path='/profile/:userId?' element={<ProfileContainer />} />
                     <Route path='/news'  element={<News />}/>

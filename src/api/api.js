@@ -39,4 +39,20 @@ export const followAPI = {
                 return response.data
             })
     }
+};
+
+export const profileAPI = {
+    getProfile(id){
+        return instance.get(`profile/${id}`, {
+            withCredentials: true
+        })
+    }
 }
+
+export const authAPI = {
+    authMe(){
+        return instance.get(`auth/me`, {
+            withCredentials: true
+        })
+    }
+};

@@ -1,7 +1,9 @@
 .contentTopImg img{
     max-width: 100%;
 }
-
+.userPhoto{
+    width: 100px;
+}
 .descriptionBlock{
     padding: 20px;
 }

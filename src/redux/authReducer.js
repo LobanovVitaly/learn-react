@@ -1,3 +1,6 @@
+import axios from "axios";
+import {authAPI, profileAPI} from "../api/api";
+
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
 const  SET_AUTH_USER_PHOTO = 'SET_AUTH_USER_PHOTO';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
@@ -30,11 +33,11 @@ const authReducer = (state = initialState, action) => {
                 },
                 isAuth: true
             }
-        case TOGGLE_IS_FETCHING:
-            return {
-                ...state,
-                isFetching: action.isFetching
-            }
+        // case TOGGLE_IS_FETCHING:
+        //     return {
+        //         ...state,
+        //         isFetching: action.isFetching
+        //     }
         default:
             return state;
     }
@@ -50,6 +53,23 @@ export const setAuthUserPhoto = (photo)=> {
     return {
         type: SET_AUTH_USER_PHOTO,
         photo: photo
+    }
+}
+export const getAuthInfo = () => {
+    return (dispatch) => {
+        authAPI.authMe()
+            .then(response => {
+                if(response.data.resultCode === 0){
+                    let { id, email, login } = response.data.data;
+                    dispatch(setAuthUserData(id, email, login));
+
+                    profileAPI.getProfile(id)
+                        .then(response => {
+                            // console.log(response.data)
+                            dispatch(setAuthUserPhoto(response.data.photos.small));
+                        })
+                }
+            })
     }
 }
 
