@@ -1,5 +1,4 @@
 const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
-const UPDATE_MESSAGE_TEXT = 'UPDATE-MESSAGE-TEXT';
 
 let initialState = {
     dialogs: [
@@ -13,8 +12,7 @@ let initialState = {
         {id: 1, message: "This HTML file is a template. If you open it directly in the browser, you will see an empty page. You can add webfonts, meta tags, or analytics to this file. The build step will place the bundled scripts into the body tag.", answer: false},
         {id: 2, message: "How are you?",  answer: false},
         {id: 3, message: "I'm funny!", answer: true},
-    ],
-    newMessageText: ''
+    ]
 };
 
 const dialogsReducer = (state = initialState, action) => {
@@ -22,35 +20,25 @@ const dialogsReducer = (state = initialState, action) => {
     // а делать лишнюю копию плохо
     switch (action.type) {
         case ADD_NEW_MESSAGE:
-            if (state.newMessageText) {
+            //if (state.newMessageText) {
                 let newMessage = {
                     id: 4,
-                    message: state.newMessageText,
+                    message: action.newText,
                     answer: true
                 };
                 return {
                     ...state,
-                    newMessageText: '',
                     messages: [...state.messages, newMessage] //вместо push
                 }
-            }
+            //}
             return state;
-        case UPDATE_MESSAGE_TEXT:
-            return {
-                ...state,
-                newMessageText: action.newText // записываем сразу  объекте
-            }
-            //stateCopy.newMessageText = action.newText;
         default:
             return state;
     }
 }
 
-export const addNewMessageActionCreator = () => {
-    return {type: ADD_NEW_MESSAGE};
-};
-export const onChangeMessageActionCreator = (text) => {
-    return {type: UPDATE_MESSAGE_TEXT, newText: text};
+export const addNewMessageActionCreator = (text) => {
+    return {type: ADD_NEW_MESSAGE, newText: text};
 };
 
 export default dialogsReducer;

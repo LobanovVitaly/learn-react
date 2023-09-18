@@ -22,7 +22,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
+                //isAuth: true
             }
         case SET_AUTH_USER_PHOTO:
             return {
@@ -43,10 +43,11 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (userId, email, login)=> {
+export const setAuthUserData = (userId, email, login, isAuth)=> {
     return {
         type: SET_AUTH_USER_DATA,
-        data: {userId, email, login}
+        data: {userId, email, login, isAuth}
+        //isAuth: isAuth
     }
 }
 export const setAuthUserPhoto = (photo)=> {
@@ -61,13 +62,48 @@ export const getAuthInfo = () => {
             .then(response => {
                 if(response.data.resultCode === 0){
                     let { id, email, login } = response.data.data;
-                    dispatch(setAuthUserData(id, email, login));
+                    dispatch(setAuthUserData(id, email, login, true));
 
                     profileAPI.getProfile(id)
                         .then(response => {
                             // console.log(response.data)
                             dispatch(setAuthUserPhoto(response.data.photos.small));
                         })
+                }
+            })
+    }
+}
+
+export const setAuthInfo = (values) => {
+    return (dispatch) => {
+        authAPI.login(values.email, values.password, values.rememberMe)
+            .then(response => {
+                console.log(response)
+                if(response.data.resultCode === 0){
+                    authAPI.authMe()
+                        .then(response => {
+                            if(response.data.resultCode === 0){
+                                let { id, email, login } = response.data.data;
+                                dispatch(setAuthUserData(id, email, login, true));
+
+                                profileAPI.getProfile(id)
+                                    .then(response => {
+                                        // console.log(response.data)
+                                        dispatch(setAuthUserPhoto(response.data.photos.small));
+                                    })
+                            }
+                        })
+                }
+            })
+    }
+}
+
+export const unsetAuthInfo = () => {
+    return (dispatch) => {
+        authAPI.logout()
+            .then(response => {
+                if(response.data.resultCode === 0){
+                    dispatch(setAuthUserData(null, null, null, false));
                 }
             })
     }

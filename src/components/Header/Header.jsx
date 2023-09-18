@@ -2,6 +2,7 @@ import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
 import userPhoto from "../../assets/img/user-avatar.png";
 import React from "react";
+import {unsetAuthInfo} from "../../redux/authReducer";
 
 const Header = (props) => {
     return (
@@ -13,6 +14,8 @@ const Header = (props) => {
                      <>
                          <img className={s.authPhoto} src={props.profile.photo != null ? props.profile.photo : userPhoto} alt={props.login} />
                          {props.login}
+
+                         <button onClick={props.unsetAuthInfo}>Logout</button>
                      </> :
                      <NavLink to='/login/'>Login</NavLink>
               }

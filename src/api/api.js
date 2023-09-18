@@ -42,17 +42,27 @@ export const followAPI = {
 };
 
 export const profileAPI = {
-    getProfile(id){
-        return instance.get(`profile/${id}`, {
+    getProfile(userID){
+        return instance.get(`profile/${userID}`, {
             withCredentials: true
         })
+    },
+    getStatus(userID){
+        return instance.get(`profile/status/${userID}`)
+    },
+    updateStatus(status){
+        return instance.put(`profile/status`, {status: status})
     }
 }
 
 export const authAPI = {
     authMe(){
-        return instance.get(`auth/me`, {
-            withCredentials: true
-        })
+        return instance.get(`auth/me`)
+    },
+    login(email, password, rememberMe, captcha){
+        return instance.post( '/auth/login', {email:email, password:password, rememberMe:rememberMe, captcha: captcha})
+    },
+    logout(){
+        return instance.delete( '/auth/login')
     }
 };
