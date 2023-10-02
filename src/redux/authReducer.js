@@ -1,5 +1,6 @@
 import axios from "axios";
 import {authAPI, profileAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
 const  SET_AUTH_USER_PHOTO = 'SET_AUTH_USER_PHOTO';
@@ -58,7 +59,8 @@ export const setAuthUserPhoto = (photo)=> {
 }
 export const getAuthInfo = () => {
     return (dispatch) => {
-        authAPI.authMe()
+
+        return authAPI.authMe()
             .then(response => {
                 if(response.data.resultCode === 0){
                     let { id, email, login } = response.data.data;
@@ -74,31 +76,22 @@ export const getAuthInfo = () => {
     }
 }
 
-export const setAuthInfo = (values) => {
+export const login = (values) => {
     return (dispatch) => {
         authAPI.login(values.email, values.password, values.rememberMe)
             .then(response => {
-                console.log(response)
                 if(response.data.resultCode === 0){
-                    authAPI.authMe()
-                        .then(response => {
-                            if(response.data.resultCode === 0){
-                                let { id, email, login } = response.data.data;
-                                dispatch(setAuthUserData(id, email, login, true));
-
-                                profileAPI.getProfile(id)
-                                    .then(response => {
-                                        // console.log(response.data)
-                                        dispatch(setAuthUserPhoto(response.data.photos.small));
-                                    })
-                            }
-                        })
+                   dispatch(getAuthInfo());
+                }
+                else{
+                    let message = response.data.messages.length ? response.data.messages[0] : "Some error";
+                    dispatch(stopSubmit("login", {_error: message}))
                 }
             })
     }
 }
 
-export const unsetAuthInfo = () => {
+export const logout = () => {
     return (dispatch) => {
         authAPI.logout()
             .then(response => {
