@@ -12,6 +12,7 @@ import withRouter from "../../hoc/withRouter";
 class ProfileContainer extends React.Component {
 
     componentDidMount() {
+        console.log(this.props)
         let userId = this.props.router.params.userId;
 
         if(!userId){
@@ -19,14 +20,16 @@ class ProfileContainer extends React.Component {
             userId = this.props.authorizedUserId
 
             if(!userId) {
-                debugger
+                //debugger
                 //this.props.router.navigate('/login')
-                const { history } = this.props;
-                history.push("/login")
+                //const { history } = this.props;
+                //this.props.history.push("/login")
+                this.props.router.location.path = '/login';
 
             }
         }
         this.props.getUserProfile(userId);
+
         // profileAPI.getProfile(userId)
         //     .then(response => {
         //         this.props.setUserProfile(response.data);
