@@ -10,11 +10,12 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import LoginPage from "./components/Login/Login";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import withRouter from "./hoc/withRouter";
 import {compose} from "redux";
 import {initializedApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
+import store from "./redux/redux-store";
 
 class App extends React.Component {
     componentDidMount(){
@@ -50,7 +51,25 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default compose(
+// export default compose(
+//     withRouter,
+//     connect(mapStateToProps, {initializedApp})
+// )(App);
+
+
+let AppComponent = compose(
     withRouter,
     connect(mapStateToProps, {initializedApp})
 )(App);
+
+const AppContainer = (props) => { // дополнительная обертка, чтобы использовать AppComponent вместе с Provider и BrowserRouter в app.text.js
+    return <React.StrictMode>
+                <BrowserRouter>
+                    <Provider store={store}>
+                        <AppComponent />
+                    </Provider>
+                </BrowserRouter>
+            </React.StrictMode>
+}
+
+export default AppContainer;

@@ -1,6 +1,7 @@
 const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
 
 let initialState = {
+    fake: 1,
     dialogs: [
         {id: 1, name: "Alex", avatar: "https://anime-fans.ru/wp-content/uploads/2021/05/Krutye-avatarki-dlya-ks-anime-kartinki_16-800x800.jpg"},
         {id: 2, name: "Berta", avatar: "https://steamuserimages-a.akamaihd.net/ugc/1689399388028765929/97874C1450207A7D30BD8E98D8714CF9E7F0FC72/?imw=512&amp;imh=512&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true"},
@@ -15,10 +16,20 @@ let initialState = {
     ]
 };
 
+
+
+
 const dialogsReducer = (state = initialState, action) => {
     // копию сразу тут делать плохо, т.к. редьюсер всегда попадает сюда, даже если action не отсюда
     // а делать лишнюю копию плохо
     switch (action.type) {
+        // case 'FAKE':
+        //     console.log('fake')
+        //     return {
+        //         ...state,
+        //         fake: state.fake+1
+        //     }
+
         case ADD_NEW_MESSAGE:
             //if (state.newMessageText) {
                 let newMessage = {

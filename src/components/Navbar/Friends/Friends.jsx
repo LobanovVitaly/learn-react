@@ -1,6 +1,7 @@
 import s from './Friends.module.css';
 import {NavLink} from "react-router-dom";
 import defaultAvatar from './../../../assets/img/user-avatar.png';
+import React from 'react';
 
 const Friends = (props) => {
     let friendsElements = props.friends.slice(0, 3).map(f => {

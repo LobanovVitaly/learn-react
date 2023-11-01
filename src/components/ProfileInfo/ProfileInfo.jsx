@@ -2,12 +2,10 @@ import React  from 'react';
 import s from "./ProfileInfo.module.css";
 import Preloader from "../common/Preloader/Preloader";
 import photo from "../../assets/img/user-avatar.png";
-import userPhoto from "../../assets/img/user-avatar.png";
+import ProfileStatus from "./ProfileStatusWithHooks";
 
-import ProfileStatus from "./ProfileStatus"
-
-const ProfileInfo = (props) => {
-    if(!props.profile){
+const ProfileInfo = ({profile, status, updateStatus}) => {
+    if(!profile){
         return <Preloader />
     }
     return (
@@ -21,28 +19,28 @@ const ProfileInfo = (props) => {
             */}
 
             <div className={s.descriptionBlock}>
-                <img className={s.userPhoto} src={props.profile.photos.small == null ?  photo : props.profile.photos.small } alt=""/>
+                <img className={s.userPhoto} src={profile.photos.small == null ?  photo : profile.photos.small } alt=""/>
 
-                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+                <ProfileStatus status={status} updateStatus={updateStatus}/>
 
-                <p>{props.profile.aboutMe}</p>
+                <p>{profile.aboutMe}</p>
             </div>
 
             <div className={s.socialLinks}>
-                {(props.profile.contacts.facebook) &&
-                    <a href={props.profile.contacts.facebook}>Facebook</a>
+                {(profile.contacts.facebook) &&
+                    <a href={profile.contacts.facebook}>Facebook</a>
                 }
-                {(props.profile.contacts.website) &&
-                    <a href={props.profile.contacts.website}>website</a>
+                {(profile.contacts.website) &&
+                    <a href={profile.contacts.website}>website</a>
                 }
-                {(props.profile.contacts.vk) &&
-                    <a href={props.profile.contacts.vk}>vk</a>
+                {(profile.contacts.vk) &&
+                    <a href={profile.contacts.vk}>vk</a>
                 }
-                {(props.profile.contacts.twitter) &&
-                    <a href={props.profile.contacts.twitter}>twitter</a>
+                {(profile.contacts.twitter) &&
+                    <a href={profile.contacts.twitter}>twitter</a>
                 }
-                {(props.profile.contacts.instagram) &&
-                    <a href={props.profile.contacts.instagram}>instagram</a>
+                {(profile.contacts.instagram) &&
+                    <a href={profile.contacts.instagram}>instagram</a>
                 }
             </div>
         </div>

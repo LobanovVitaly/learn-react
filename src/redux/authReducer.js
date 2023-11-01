@@ -1,10 +1,8 @@
-import axios from "axios";
 import {authAPI, profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
 const  SET_AUTH_USER_PHOTO = 'SET_AUTH_USER_PHOTO';
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 let initialState = {
     userId: null,
@@ -13,8 +11,7 @@ let initialState = {
     isAuth: false,
     profile: {
         photo: null
-    },
-    //isFetching: false
+    }
 };
 
 const authReducer = (state = initialState, action) => {
@@ -34,11 +31,6 @@ const authReducer = (state = initialState, action) => {
                 },
                 isAuth: true
             }
-        // case TOGGLE_IS_FETCHING:
-        //     return {
-        //         ...state,
-        //         isFetching: action.isFetching
-        //     }
         default:
             return state;
     }
@@ -48,7 +40,6 @@ export const setAuthUserData = (userId, email, login, isAuth)=> {
     return {
         type: SET_AUTH_USER_DATA,
         data: {userId, email, login, isAuth}
-        //isAuth: isAuth
     }
 }
 export const setAuthUserPhoto = (photo)=> {
@@ -58,52 +49,45 @@ export const setAuthUserPhoto = (photo)=> {
     }
 }
 export const getAuthInfo = () => {
-    return (dispatch) => {
+    return async (dispatch) => {
 
-        return authAPI.authMe()
-            .then(response => {
-                if(response.data.resultCode === 0){
-                    let { id, email, login } = response.data.data;
-                    dispatch(setAuthUserData(id, email, login, true));
+        let response = await authAPI.authMe();
 
-                    profileAPI.getProfile(id)
-                        .then(response => {
-                            // console.log(response.data)
-                            dispatch(setAuthUserPhoto(response.data.photos.small));
-                        })
-                }
-            })
+        if(response.data.resultCode === 0){
+            let { id, email, login } = response.data.data;
+            dispatch(setAuthUserData(id, email, login, true));
+
+            profileAPI.getProfile(id)
+                .then(response => {
+                    // console.log(response.data)
+                    dispatch(setAuthUserPhoto(response.data.photos.small));
+                })
+        }
     }
 }
 
 export const login = (values) => {
-    return (dispatch) => {
-        authAPI.login(values.email, values.password, values.rememberMe)
-            .then(response => {
-                if(response.data.resultCode === 0){
-                   dispatch(getAuthInfo());
-                }
-                else{
-                    let message = response.data.messages.length ? response.data.messages[0] : "Some error";
-                    dispatch(stopSubmit("login", {_error: message}))
-                }
-            })
+    return async (dispatch) => {
+        let response = await authAPI.login(values.email, values.password, values.rememberMe);
+
+        if(response.data.resultCode === 0){
+           dispatch(getAuthInfo());
+        }
+        else{
+            let message = response.data.messages.length ? response.data.messages[0] : "Some error";
+            dispatch(stopSubmit("login", {_error: message}))
+        }
     }
 }
 
 export const logout = () => {
-    return (dispatch) => {
-        authAPI.logout()
-            .then(response => {
-                if(response.data.resultCode === 0){
-                    dispatch(setAuthUserData(null, null, null, false));
-                }
-            })
+    return async (dispatch) => {
+        let response = await authAPI.logout();
+        console.log(response.data.resultCode)
+        if(response.data.resultCode === 0){
+            dispatch(setAuthUserData(null, null, null, false));
+        }
     }
 }
-
-// export const toggleIsFetching = (isFetching) => {
-//     return {type: TOGGLE_IS_FETCHING, isFetching: isFetching}
-// };
 
 export default authReducer;

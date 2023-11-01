@@ -4,6 +4,7 @@ const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const DELETE_POST = 'DELETE_POST';
 
 let initialState = {
     posts: [
@@ -43,6 +44,12 @@ const profileReducer = (state = initialState, action) => {
                 status: action.status
             }
         }
+        case DELETE_POST: {
+            return {
+                ...state,
+                posts: state.posts.filter((post) => post.id != action.id)
+            }
+        }
         default:
             return state;
     }
@@ -63,33 +70,30 @@ export const setStatus = (status) => {
 
 
 export const getUserProfile = (id) => {
-    return (dispatch) => {
-        profileAPI.getProfile(id)
-            .then(response => {
-                dispatch(setUserProfile(response.data));
-            })
+    return async (dispatch) => {
+        let response = await profileAPI.getProfile(id);
+        dispatch(setUserProfile(response.data));
     }
 }
 
 export const getStatus = (id) => {
-    return (dispatch) => {
-        profileAPI.getStatus(id)
-            .then(response => {
-                dispatch(setStatus(response.data));
-            })
+    return async (dispatch) => {
+       let response = await profileAPI.getStatus(id);
+        dispatch(setStatus(response.data));
     }
 }
 
 export const updateStatus = (status) => {
-    return (dispatch) => {
-        profileAPI.updateStatus(status)
-            .then(response => {
-                if(response.data.resultCode === 0){
-                    dispatch(setStatus(status));
-                }
-
-            })
+    return async (dispatch) => {
+        let response =  await profileAPI.updateStatus(status)
+        if(response.data.resultCode === 0){
+            dispatch(setStatus(status));
+        }
     }
+}
+
+export const deletePost = (id) => {
+    return {type: DELETE_POST, id}
 }
 
 

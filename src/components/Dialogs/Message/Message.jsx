@@ -1,4 +1,5 @@
 import s from "./Message.module.css";
+import React from 'react';
 
 const Message = (props) => {
     let messClass = s.messageRow + ' ' + ((props.answer) ? s.answer : '');

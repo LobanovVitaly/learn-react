@@ -2,36 +2,23 @@ import React from 'react';
 import {Field, reduxForm} from "redux-form";
 import {login} from "../../redux/authReducer";
 import {connect} from "react-redux";
-import {Input} from "../common/FormControls/FormControls";
+import {createField, CreateField, Input} from "../common/FormControls/FormControls";
 import {required} from "../../utils/validators/validators";
 import {Navigate} from "react-router-dom";
 import style from './../common/FormControls/FormControls.module.css'
 
 
-const LoginForm = (props) => {
+//const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error}) => { // деструктурируем props сразу на нужные аргументы
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component={Input}
-                       name={"email"}
-                       placeholder={"Email"}
-                       validate={[required]}
-                />
-            </div>
-            <div>
-                <Field component={Input}
-                       name={"password"}
-                       placeholder={"Password"}
-                       validate={[required]}
-                       type={"password"}
-                />
-            </div>
-            <div>
-                <Field component={Input} name={"rememberMe"} type={"checkbox"} /> remember me
-            </div>
-            {   props.error &&
+        <form onSubmit={handleSubmit}>
+            {createField(Input, "email", "Email", [required])}
+            {createField(Input, "password", "Password", [required], {type: "password"})}
+            {createField(Input, "rememberMe", null, null, {type: "checkbox"}, "remember me")}
+
+            {   error &&
                 <div className={style.formSummaryError}>
-                    {props.error}
+                    {error}
                 </div>
             }
             <div>

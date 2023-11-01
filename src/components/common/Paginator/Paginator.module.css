@@ -1,0 +1,13 @@
+.pagination{
+    padding: 30px;
+}
+.pagination span{
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid;
+    cursor: pointer
+}
+.currentPage{
+    font-weight: bold;
+}

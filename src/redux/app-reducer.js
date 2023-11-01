@@ -25,6 +25,8 @@ export const setInitialized = () => {
 export const initializedApp = () => (dispatch) => {
     let promise = dispatch(getAuthInfo());
 
+    console.log(promise)
+
     //dispatch(somethingElse);
     // может быть несколько диспатчей  с какими то санками
     // нужно дождать завершения всех санок
